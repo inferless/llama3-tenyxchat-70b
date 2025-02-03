@@ -6,3 +6,4 @@ build:
     - "transformers==4.40.1"
     - "accelerate==0.29.3"
     - "bitsandbytes==0.43.1"
+    - "huggingface-hub==0.25.2"
