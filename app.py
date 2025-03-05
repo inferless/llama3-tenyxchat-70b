@@ -1,3 +1,6 @@
+import os
+os.environ["HF_HUB_ENABLE_HF_TRANSFER"]='1'
+from huggingface_hub import snapshot_download
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -5,9 +8,10 @@ from transformers import (
     AutoTokenizer
 )
 
-class InferlessPythonModel:    
+class InferlessPythonModel:
     def initialize(self):
         model_name = "tenyx/Llama3-TenyxChat-70B"
+        snapshot_download(repo_id=model_name,allow_patterns=["*.safetensors"])
         bnb_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map={"": 0})
